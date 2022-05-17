@@ -26,13 +26,13 @@ class NetworkDataFetcher {
    
     // MARK: - Запрос для рандомных фото
     
-    func fetchRandomImages(completion: @escaping (RandomPhotoResult?)->()){
+    func fetchRandomImages(completion: @escaping ([RandomPhotoResult]?)->()){
         networkService.randomRequest { (data, error) in
             if let error = error {
                 print("Error reciving request data \(error.localizedDescription)")
                 completion(nil)
             }
-            let decode = self.decodeJSON(type: RandomPhotoResult.self, from: data)
+            let decode = self.decodeJSON(type: [RandomPhotoResult].self, from: data)
             completion(decode)
         }
     }

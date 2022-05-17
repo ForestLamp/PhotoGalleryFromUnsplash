@@ -27,7 +27,11 @@ class PhotosCollectionViewController: UICollectionViewController {
         setupSearchBar()
         
         
-        
+        networkDataFetcher.fetchRandomImages { (results) in
+            results?.map({ (photo) in
+               print(photo.urls.small)
+            })
+        }
         
     }
    

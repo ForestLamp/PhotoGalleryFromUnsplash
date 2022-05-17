@@ -15,6 +15,8 @@ class PhotosCollectionViewController: UICollectionViewController {
 //        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addBarButtonTapped))
 //    }()
     
+    private var networkDataFetcher = NetworkDataFetcher()
+    private var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,11 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = .cyan
         setupCollectionView()
         setupNavigationBar()
+        setupSearchBar()
+        
+        
+        
+        
     }
    
     //MARK: - NavigationItem action
@@ -45,6 +52,16 @@ class PhotosCollectionViewController: UICollectionViewController {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellID")
     }
     
+    private func setupSearchBar(){
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.hidesSearchBarWhenScrolling = false
+        searchController.searchBar.placeholder = "Search picture"
+        self.navigationItem.searchController = searchController
+        self.definesPresentationContext = true
+        searchController.searchBar.delegate = self
+    }
+    
     //MARK: - UICollectionViewDataSource, UICollectionViewDelegate
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -57,4 +74,23 @@ class PhotosCollectionViewController: UICollectionViewController {
         return cell
     }
     
+}
+
+
+//MARK: - UISearchBarDelegate
+
+extension PhotosCollectionViewController: UISearchBarDelegate {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        print(searchText)
+        
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            self.networkDataFetcher.fetchImages(searchTerm: searchText) { (searchResults) in
+                searchResults?.results.map({ (photo) in
+                    print(photo.urls["small"])
+                })
+            }
+        })
+    }
 }

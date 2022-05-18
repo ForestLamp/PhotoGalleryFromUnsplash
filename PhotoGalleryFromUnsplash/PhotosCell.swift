@@ -32,23 +32,25 @@ class PhotosCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
-        label.text = "Alex Ch."
+        label.text = "Проверьте интернет соединение"
         return label
     }()
     
     var randomUnsplashPhoto: RandomPhotoResult! {
         didSet {
-            let photoURL = randomUnsplashPhoto.urls["regular"]
+            let photoURL = randomUnsplashPhoto.urls["small"]
             guard let imageURL = photoURL, let url = URL(string: imageURL) else {return}
             photoImageView.sd_setImage(with: url, completed: nil)
+            nameLabel.text = randomUnsplashPhoto.user.name
         }
     }
     
     var searchUnsplashPhoto: UnsplashPhoto! {
         didSet {
-            let photoURL = searchUnsplashPhoto.urls["regular"]
+            let photoURL = searchUnsplashPhoto.urls["small"]
             guard let imageURL = photoURL, let url = URL(string: imageURL) else {return}
             photoImageView.sd_setImage(with: url, completed: nil)
+            nameLabel.text = searchUnsplashPhoto.user.name
         }
     }
     

@@ -19,11 +19,12 @@ class PhotosCollectionViewController: UICollectionViewController {
     private var timer: Timer?
     private var searchPhotos = [UnsplashPhoto]()
     private var randomPhotos = [RandomPhotoResult]()
+    private let itemsPerRow: CGFloat = 1
+    private let sectionInserts = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = .cyan
         setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
@@ -59,8 +60,11 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     private func setupCollectionView(){
+        collectionView.backgroundColor = .white
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellID")
         collectionView.register(PhotosCell.self, forCellWithReuseIdentifier: PhotosCell.reuseId)
+        collectionView.layoutMargins = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16)
+        collectionView.contentInsetAdjustmentBehavior = .automatic
     }
     
     private func setupSearchBar(){
@@ -86,6 +90,9 @@ class PhotosCollectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        // TODO: развернуть ячейку!
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCell.reuseId, for: indexPath) as! PhotosCell
         if isSearch {
             let unsplashPhoto = searchPhotos[indexPath.item]
@@ -118,5 +125,27 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
                 }
             }
         })
+    }
+}
+
+//MARK: - UICollectionViewDelegateFlowLayout
+
+extension PhotosCollectionViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let photo = randomPhotos[indexPath.item]
+        let paddingSpace = sectionInserts.left * (itemsPerRow + 1)
+        let availableWidth = view.frame.width - paddingSpace
+        let widthPerItem = availableWidth / itemsPerRow
+        let height = CGFloat(photo.height) * widthPerItem / CGFloat(photo.width)
+        return CGSize(width: widthPerItem, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return sectionInserts
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return sectionInserts.left
     }
 }

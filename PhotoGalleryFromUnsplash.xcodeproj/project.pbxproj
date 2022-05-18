@@ -96,11 +96,11 @@
 		9F1265D4283287C600850406 /* PhotoGalleryFromUnsplash */ = {
 			isa = PBXGroup;
 			children = (
+				9F1265E3283287C700850406 /* Info.plist */,
 				9F1265FB2832E9FE00850406 /* Application */,
 				9F1265FC2832EA1500850406 /* Supporting Files */,
 				9F1265F72832E9C100850406 /* Service */,
 				9F126618283532F400850406 /* Controllers */,
-				9F1265E3283287C700850406 /* Info.plist */,
 			);
 			path = PhotoGalleryFromUnsplash;
 			sourceTree = "<group>";

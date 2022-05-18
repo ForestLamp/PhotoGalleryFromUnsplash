@@ -61,7 +61,7 @@ class DetailsViewController: UIViewController {
         }
     }
     
-    func setData(model: RandomPhotoResult) {
+    func setRandomData(model: RandomPhotoResult) {
         
         if let image = model.urls["small"]{
             self.image = image
@@ -70,6 +70,16 @@ class DetailsViewController: UIViewController {
         createdDate = model.created_at
         location = model.user.location ?? ""
         downloadCount = model.downloads
+        
+    }
+    
+    func setSearchData(model: UnsplashPhoto) {
+        
+        if let image = model.urls["small"]{
+            self.image = image
+        }
+        name = model.user.name ?? ""
+        createdDate = model.created_at
         
     }
     

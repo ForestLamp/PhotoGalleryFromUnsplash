@@ -109,12 +109,17 @@ class PhotosCollectionViewController: UICollectionViewController {
         let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell
         guard let image = cell.photoImageView.image else {return}
         selectedImages.append(image)
- 
-        if let detailsVC = DetailsViewController() as? DetailsViewController {
-            detailsVC.setData(model: randomPhotos[indexPath.row])
-            self.present(detailsVC, animated: true, completion:nil)
-        }        
-    }
+        if isSearch {
+                let detailsVC = DetailsViewController()
+                detailsVC.setSearchData(model: searchPhotos[indexPath.row])
+                self.present(detailsVC, animated: true, completion:nil)
+            } else {
+                let detailsVC = DetailsViewController()
+                detailsVC.setRandomData(model: randomPhotos[indexPath.row])
+                self.present(detailsVC, animated: true, completion:nil)
+                
+            }
+        }
     
     override func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath) as! PhotosCell

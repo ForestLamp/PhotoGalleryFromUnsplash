@@ -16,6 +16,7 @@ struct SearchResults: Decodable {
 struct UnsplashPhoto: Decodable {
     let width: Int
     let height: Int
+    let created_at: String
     let user: UserName
     let urls: [URLKind.RawValue:String]
     

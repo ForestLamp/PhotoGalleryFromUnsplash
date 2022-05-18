@@ -12,15 +12,21 @@ class PhotosCell: UICollectionViewCell {
     
     static let reuseId = "PhotosCell"
     
+    private let activityIndicator: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        return activityIndicator
+    }()
+    
     private let checkmark: UIImageView = {
-       let image = UIImage(named: "bird.png")
+       let image = UIImage(named: "bird.pdf")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
         return imageView
     }()
     
-    private let photoImageView: UIImageView = {
+    let photoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.backgroundColor = #colorLiteral(red: 0.6666666865, green: 0.6666666865, blue: 0.6666666865, alpha: 1)
@@ -32,19 +38,58 @@ class PhotosCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.text = "Проверьте интернет соединение"
         return label
     }()
     
-    var randomUnsplashPhoto: RandomPhotoResult! {
-        didSet {
-            let photoURL = randomUnsplashPhoto.urls["small"]
-            guard let imageURL = photoURL, let url = URL(string: imageURL) else {return}
-            photoImageView.sd_setImage(with: url, completed: nil)
-            nameLabel.text = randomUnsplashPhoto.user.name
+    func setupCellForRandomPhoto(model: RandomPhotoResult){
+        
+        nameLabel.text = model.user.name
+        let photoURL = model.urls["small"]
+        guard let imageUrl = photoURL,
+              let url = URL(string: imageUrl) else {return}
+        self.photoImageView.sd_setImage(with: url){_,_,_,_ in
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
         }
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+        
     }
     
+    func setupCellForSearchPhoto(model: UnsplashPhoto){
+        
+        nameLabel.text = model.user.name
+        photoImageView.image = UIImage()
+        let photoURL = model.urls["small"]
+        guard let imageUrl = photoURL,
+              let url = URL(string: imageUrl) else {return}
+        self.photoImageView.sd_setImage(with: url){_,_,_,_ in
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.isHidden = true
+        }
+        self.activityIndicator.startAnimating()
+        self.activityIndicator.isHidden = false
+    }
+    
+/*
+    var randomUnsplashPhoto: RandomPhotoResult! {
+        didSet {
+            DispatchQueue.global().async {
+                let photoURL = self.randomUnsplashPhoto.urls["small"]
+                guard let imageURL = photoURL,
+                      let url = URL(string: imageURL) else {return}
+                DispatchQueue.main.async {
+               //     self.photoImageView.sd_setImage(with: url, completed: nil)
+                    self.photoImageView.image = UIImage(data: imageData)
+                    self.nameLabel.text = self.randomUnsplashPhoto.user.name
+                }
+            }
+
+        }
+    }
+
     var searchUnsplashPhoto: UnsplashPhoto! {
         didSet {
             let photoURL = searchUnsplashPhoto.urls["small"]
@@ -53,6 +98,8 @@ class PhotosCell: UICollectionViewCell {
             nameLabel.text = searchUnsplashPhoto.user.name
         }
     }
+*/
+    
     
     override var isSelected: Bool {
         didSet {
@@ -87,12 +134,17 @@ class PhotosCell: UICollectionViewCell {
             photoImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
+        photoImageView.addSubview(activityIndicator)
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: self.centerXAnchor)
+        ])
+        
         photoImageView.addSubview(nameLabel)
         NSLayoutConstraint.activate([
-//            nameLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            nameLabel.leadingAnchor.constraint(equalTo: photoImageView.leadingAnchor, constant: 2),
+            nameLabel.leadingAnchor.constraint(equalTo: photoImageView.leadingAnchor, constant: 10),
             nameLabel.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: -2),
-            nameLabel.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant:  -2)
+            nameLabel.bottomAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant:  -4)
         ])
         
         photoImageView.addSubview(checkmark)

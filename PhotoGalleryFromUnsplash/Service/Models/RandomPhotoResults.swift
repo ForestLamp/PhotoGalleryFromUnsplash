@@ -12,6 +12,7 @@ struct RandomPhotoResult: Decodable {
     let id: String
     let created_at: String
     let width, height: Int
+    let downloads: Int
     let location: Location
     let urls: [URLKind.RawValue:String]
     let user: User

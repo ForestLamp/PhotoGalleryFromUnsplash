@@ -13,5 +13,4 @@ class FavouritesCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         view.backgroundColor = .yellow
     }
-    
 }

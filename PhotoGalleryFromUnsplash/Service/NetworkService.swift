@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class NetworkService {
     
     private let numberOfPage = 2

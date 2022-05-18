@@ -19,7 +19,7 @@ class PhotosCell: UICollectionViewCell {
     }()
     
     private let checkmark: UIImageView = {
-       let image = UIImage(named: "bird.pdf")
+        let image = UIImage(named: "bird.pdf")
         let imageView = UIImageView(image: image)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.alpha = 0
@@ -73,34 +73,6 @@ class PhotosCell: UICollectionViewCell {
         self.activityIndicator.isHidden = false
     }
     
-/*
-    var randomUnsplashPhoto: RandomPhotoResult! {
-        didSet {
-            DispatchQueue.global().async {
-                let photoURL = self.randomUnsplashPhoto.urls["small"]
-                guard let imageURL = photoURL,
-                      let url = URL(string: imageURL) else {return}
-                DispatchQueue.main.async {
-               //     self.photoImageView.sd_setImage(with: url, completed: nil)
-                    self.photoImageView.image = UIImage(data: imageData)
-                    self.nameLabel.text = self.randomUnsplashPhoto.user.name
-                }
-            }
-
-        }
-    }
-
-    var searchUnsplashPhoto: UnsplashPhoto! {
-        didSet {
-            let photoURL = searchUnsplashPhoto.urls["small"]
-            guard let imageURL = photoURL, let url = URL(string: imageURL) else {return}
-            photoImageView.sd_setImage(with: url, completed: nil)
-            nameLabel.text = searchUnsplashPhoto.user.name
-        }
-    }
-*/
-    
-    
     override var isSelected: Bool {
         didSet {
             updateSelectedState()
@@ -114,13 +86,11 @@ class PhotosCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         photoImageView.image = nil
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         setupUIElements()
         updateSelectedState()
     }
@@ -151,7 +121,7 @@ class PhotosCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             checkmark.topAnchor.constraint(equalTo: photoImageView.topAnchor, constant: 2),
             checkmark.trailingAnchor.constraint(equalTo: photoImageView.trailingAnchor, constant: -2)
-
+            
         ])
     }
     

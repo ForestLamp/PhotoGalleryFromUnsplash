@@ -23,14 +23,8 @@ struct RandomPhotoResult: Decodable {
         case regular
         case small
         case thumb
-        
     }
 }
-
-//// MARK: - Urls
-//struct Urls: Decodable {
-//    let regular, small: String
-//}
 
 // MARK: - Location
 struct Location: Decodable {

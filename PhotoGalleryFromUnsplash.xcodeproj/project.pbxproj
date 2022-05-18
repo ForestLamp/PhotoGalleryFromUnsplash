@@ -20,7 +20,6 @@
 		9F1265FF283393A700850406 /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1265FE283393A700850406 /* NetworkDataFetcher.swift */; };
 		9F1266022833944500850406 /* SearchResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1266012833944500850406 /* SearchResults.swift */; };
 		9F1266082833991600850406 /* RandomPhotoResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1266072833991600850406 /* RandomPhotoResults.swift */; };
-		9F12660C2833D99100850406 /* Helper in Resources */ = {isa = PBXBuildFile; fileRef = 9F12660B2833D99100850406 /* Helper */; };
 		9F12660F2833DE3800850406 /* PhotosCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F12660E2833DE3800850406 /* PhotosCell.swift */; };
 		9F12661D2835371800850406 /* FavouritesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F12661C2835371800850406 /* FavouritesCollectionViewController.swift */; };
 /* End PBXBuildFile section */
@@ -42,7 +41,6 @@
 		9F1265FE283393A700850406 /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		9F1266012833944500850406 /* SearchResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResults.swift; sourceTree = "<group>"; };
 		9F1266072833991600850406 /* RandomPhotoResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomPhotoResults.swift; sourceTree = "<group>"; };
-		9F12660B2833D99100850406 /* Helper */ = {isa = PBXFileReference; lastKnownFileType = text; path = Helper; sourceTree = "<group>"; };
 		9F12660E2833DE3800850406 /* PhotosCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosCell.swift; sourceTree = "<group>"; };
 		9F12661C2835371800850406 /* FavouritesCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritesCollectionViewController.swift; sourceTree = "<group>"; };
 		C7A87E40236434594036FF62 /* Pods-PhotoGalleryFromUnsplash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PhotoGalleryFromUnsplash.release.xcconfig"; path = "Target Support Files/Pods-PhotoGalleryFromUnsplash/Pods-PhotoGalleryFromUnsplash.release.xcconfig"; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 				9F1265FC2832EA1500850406 /* Supporting Files */,
 				9F1265F72832E9C100850406 /* Service */,
 				9F126618283532F400850406 /* Controllers */,
-				9F1265EA2832899C00850406 /* MainTabBarController.swift */,
 				9F1265E3283287C700850406 /* Info.plist */,
 			);
 			path = PhotoGalleryFromUnsplash;
@@ -142,7 +139,6 @@
 			children = (
 				9F1266012833944500850406 /* SearchResults.swift */,
 				9F1266072833991600850406 /* RandomPhotoResults.swift */,
-				9F12660B2833D99100850406 /* Helper */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -154,6 +150,7 @@
 				9F12660E2833DE3800850406 /* PhotosCell.swift */,
 				9F1265D9283287C600850406 /* DetailsViewController.swift */,
 				9F12661C2835371800850406 /* FavouritesCollectionViewController.swift */,
+				9F1265EA2832899C00850406 /* MainTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -219,7 +216,6 @@
 			files = (
 				9F1265E2283287C700850406 /* LaunchScreen.storyboard in Resources */,
 				9F1265DF283287C700850406 /* Assets.xcassets in Resources */,
-				9F12660C2833D99100850406 /* Helper in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

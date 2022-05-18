@@ -7,7 +7,6 @@
 
 import Foundation
 
-
     enum Components: String {
         case scheme = "https"
         case host = "api.unsplash.com"

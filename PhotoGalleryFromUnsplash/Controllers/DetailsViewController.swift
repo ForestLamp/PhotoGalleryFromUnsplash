@@ -43,7 +43,6 @@ class DetailsViewController: UIViewController {
     
     func setupUI(){
         
-        photoImageView.image = UIImage()
         let url = URL(string: image)
         self.photoImageView.sd_setImage(with: url)
         nameLabel.text = "Автор: \(name)"

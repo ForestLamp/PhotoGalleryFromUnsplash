@@ -17,6 +17,8 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     private var networkDataFetcher = NetworkDataFetcher()
     private var timer: Timer?
+    private var searchPhotos = [UnsplashPhoto]()
+    private var randomPhotos = [RandomPhotoResult]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,16 +27,20 @@ class PhotosCollectionViewController: UICollectionViewController {
         setupCollectionView()
         setupNavigationBar()
         setupSearchBar()
-        
-        
-        networkDataFetcher.fetchRandomImages { (results) in
-            results?.map({ (photo) in
-               print(photo.urls.small)
-            })
-        }
+        getPhotos()
         
     }
    
+    private func getPhotos(){
+        networkDataFetcher.fetchRandomImages { [weak self] (randomResults) in
+            guard let fetchedPhotos = randomResults else {return}
+            DispatchQueue.main.async {
+                self?.randomPhotos = fetchedPhotos
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+    
     //MARK: - NavigationItem action
     
     @objc private func addBarButtonTapped(){
@@ -54,6 +60,7 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     private func setupCollectionView(){
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "CellID")
+        collectionView.register(PhotosCell.self, forCellWithReuseIdentifier: PhotosCell.reuseId)
     }
     
     private func setupSearchBar(){
@@ -68,19 +75,30 @@ class PhotosCollectionViewController: UICollectionViewController {
     
     //MARK: - UICollectionViewDataSource, UICollectionViewDelegate
     
+    private var isSearch: Bool = false
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        if isSearch{
+            return searchPhotos.count
+        } else {
+            return randomPhotos.count
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CellID", for: indexPath)
-        cell.backgroundColor = .red
-        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotosCell.reuseId, for: indexPath) as! PhotosCell
+        if isSearch {
+            let unsplashPhoto = searchPhotos[indexPath.item]
+            cell.searchUnsplashPhoto = unsplashPhoto
+            return cell
+        } else {
+            let unsplashPhoto = randomPhotos[indexPath.item]
+            cell.randomUnsplashPhoto = unsplashPhoto
+            return cell
+        }
     }
     
 }
-
-
 //MARK: - UISearchBarDelegate
 
 extension PhotosCollectionViewController: UISearchBarDelegate {
@@ -90,10 +108,14 @@ extension PhotosCollectionViewController: UISearchBarDelegate {
         
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
-            self.networkDataFetcher.fetchImages(searchTerm: searchText) { (searchResults) in
-                searchResults?.results.map({ (photo) in
-                    print(photo.urls["small"])
-                })
+            
+            self.networkDataFetcher.fetchImages(searchTerm: searchText) { [weak self] (searchResults) in
+                self?.isSearch = true
+                guard let fetchedPhotos = searchResults else {return}
+                DispatchQueue.main.async {
+                    self?.searchPhotos = fetchedPhotos.results
+                    self?.collectionView.reloadData()
+                }
             }
         })
     }

@@ -10,23 +10,26 @@ import Foundation
 // MARK: - RandomPhotoResult
 struct RandomPhotoResult: Decodable {
     let id: String
-    let createdAt: String
+    let created_at: String
     let width, height: Int
     let location: Location
-    let urls: Urls
+    let urls: [URLKind.RawValue:String]
     let user: User
-
-    enum CodingKeys: String, CodingKey {
-        case id
-        case createdAt = "created_at"
-        case width, height, location, urls, user
+    
+    enum URLKind: String {
+        case raw
+        case full
+        case regular
+        case small
+        case thumb
+        
     }
 }
 
-// MARK: - Urls
-struct Urls: Decodable {
-    let regular, small: String
-}
+//// MARK: - Urls
+//struct Urls: Decodable {
+//    let regular, small: String
+//}
 
 // MARK: - Location
 struct Location: Decodable {
